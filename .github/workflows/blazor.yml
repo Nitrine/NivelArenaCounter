@@ -23,7 +23,7 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: Publish
-        run: dotnet publish -c Release -o release --nologo
+        run: dotnet publish NivelCounter/NivelCounter.csproj -c Release -o build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
