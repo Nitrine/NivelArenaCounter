@@ -1,81 +1,106 @@
 ﻿@page "/"
 
-<div class="layout-container">
+<div class="card-image-wrapper">
+    <img src="@CurrentLeaderImage" class="leader-card" />
+</div>
 
-    <!-- 좌측: 사이즈 계산 -->
-    <div class="panel">
-        <h3>사이즈 계산</h3>
+<div class="top-display">
+    <span class="top-value">@TotalSize</span>
+    <span class="top-divider">/</span>
+    <span class="top-value">@Cost</span>
+</div>
 
-        <div class="counter-block">
-            <span class="label">리더 레벨</span>
-            <div class="controls">
-                <button class="btn-box" @onclick="() => LeaderLevel++">+</button>
-                <span class="value">@LeaderLevel</span>
-                <button class="btn-box" @onclick="() => LeaderLevel = Math.Max(0, LeaderLevel - 1)">−</button>
-            </div>
-        </div>
-
-        <div class="counter-block">
-            <span class="label">데미지</span>
-            <div class="controls">
-                <button class="btn-box" @onclick="() => Damage++">+</button>
-                <span class="value">@Damage</span>
-                <button class="btn-box" @onclick="() => Damage = Math.Max(0, Damage - 1)">−</button>
-            </div>
-        </div>
-
-        <div class="result-box">
-            전체 사이즈: @TotalSize
+<div class="row-two">
+    <!-- 리더 레벨 -->
+    <div class="mini-box">
+        <div class="mini-title">LV</div>
+        <div class="mini-controls">
+            <button @onclick="() => LeaderLevel++">+</button>
+            <span class="mini-number">@LeaderLevel</span>
+            <button @onclick="() => LeaderLevel = Math.Max(0, LeaderLevel - 1)">-</button>
         </div>
     </div>
 
-    <!-- 우측: 코스트 계산 -->
-    <div class="panel">
-        <h3>코스트 계산</h3>
+    <!-- 데미지 -->
+    <div class="mini-box">
+        <div class="mini-title">DMG</div>
+        <div class="mini-controls">
+            <button @onclick="() => Damage++">+</button>
+            <span class="mini-number">@Damage</span>
+            <button @onclick="() => Damage = Math.Max(0, Damage - 1)">-</button>
+        </div>
+    </div>
+</div>
 
-        @foreach (var item in CostItems)
-        {
-            <div class="counter-block">
-                <span class="label">@item.Label</span>
-                <div class="controls">
-                    <button class="btn-box" @onclick="() => item.Setter(item.Getter() + 1)">+</button>
-                    <span class="value">@item.Getter()</span>
-                    <button class="btn-box" @onclick="() => item.Setter(Math.Max(0, item.Getter() - 1))">−</button>
-                </div>
-            </div>
-        }
-
-        <div class="result-box">
-            총 코스트: @Cost
-            <br />
-            사용 가능 코스트:
-            <span style="color:@(AvailableCost < 0 ? "red" : "green")">@AvailableCost</span>
+<!-- 유닛 / 스킬 / 무기 -->
+<div class="unit-row">
+    <div class="unit-box">
+        <div class="icon">👤</div>
+        <div class="unit-controls">
+            <button @onclick="() => UnitCost1 = Math.Max(0, UnitCost1 - 1)">-</button>
+            <span>@UnitCost1</span>
+            <button @onclick="() => UnitCost1++">+</button>
         </div>
     </div>
 
+    <div class="unit-box">
+        <div class="icon">⛰️</div>
+        <div class="unit-controls">
+            <button @onclick="() => UnitCost2 = Math.Max(0, UnitCost2 - 1)">-</button>
+            <span>@UnitCost2</span>
+            <button @onclick="() => UnitCost2++">+</button>
+        </div>
+    </div>
+
+    <div class="unit-box">
+        <div class="icon">⚡</div>
+        <div class="unit-controls">
+            <button @onclick="() => UnitCost3 = Math.Max(0, UnitCost3 - 1)">-</button>
+            <span>@UnitCost3</span>
+            <button @onclick="() => UnitCost3++">+</button>
+        </div>
+    </div>
+</div>
+
+<div class="unit-row">
+    <div class="unit-box">
+        <div class="icon">⭐</div>
+        <div class="unit-controls">
+            <button @onclick="() => SkillCost = Math.Max(0, SkillCost - 1)">-</button>
+            <span>@SkillCost</span>
+            <button @onclick="() => SkillCost++">+</button>
+        </div>
+    </div>
+
+    <div class="unit-box">
+        <div class="icon">🗡️</div>
+        <div class="unit-controls">
+            <button @onclick="() => WeaponCost = Math.Max(0, WeaponCost - 1)">-</button>
+            <span>@WeaponCost</span>
+            <button @onclick="() => WeaponCost++">+</button>
+        </div>
+    </div>
+</div>
+
+<div class="final-box">
+    사용 가능 코스트:
+    <span style="color:@(AvailableCost < 0 ? "red" : "green")">@AvailableCost</span>
 </div>
 
 @code {
     private int LeaderLevel = 1;
     private int Damage = 0;
+
     private int UnitCost1 = 0;
     private int UnitCost2 = 0;
     private int UnitCost3 = 0;
     private int SkillCost = 0;
     private int WeaponCost = 0;
 
+    private string CurrentLeaderImage =>
+        LeaderLevel < 10 ? "/img/leader_front.jpg" : "/img/leader_back.jpg";
+
     private int TotalSize => LeaderLevel + Damage;
     private int Cost => UnitCost1 + UnitCost2 + UnitCost3 + SkillCost + WeaponCost;
     private int AvailableCost => TotalSize - Cost;
-
-    private record CostItem(string Label, Func<int> Getter, Action<int> Setter);
-
-    private List<CostItem> CostItems => new()
-    {
-            new("유닛1 코스트", () => UnitCost1, v => UnitCost1 = v),
-            new("유닛2 코스트", () => UnitCost2, v => UnitCost2 = v),
-            new("유닛3 코스트", () => UnitCost3, v => UnitCost3 = v),
-            new("스킬 코스트", () => SkillCost, v => SkillCost = v),
-            new("무기 코스트", () => WeaponCost, v => WeaponCost = v),
-        };
 }
