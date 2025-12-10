@@ -1,0 +1,16 @@
+﻿<div class="counter-box">
+    <label>@Label</label>
+
+    <div class="counter-controls">
+        <button class="btn-box" @onclick="OnIncrement">+</button>
+        <span>@Value</span>
+        <button class="btn-box" @onclick="OnDecrement">−</button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Label { get; set; }
+    [Parameter] public int Value { get; set; }
+    [Parameter] public EventCallback OnIncrement { get; set; }
+    [Parameter] public EventCallback OnDecrement { get; set; }
+}

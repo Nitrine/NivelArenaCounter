@@ -1,0 +1,218 @@
+﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+a, .btn-link {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.content {
+    padding-top: 1.1rem;
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+
+
+.container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    max-width: 350px;
+    margin: auto;
+    text-align: center;
+}
+
+.counter-block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: black;
+}
+
+.panel h3{
+    color: crimson;
+}
+
+.label {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+
+
+.value {
+    width: 40px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.result-box {
+    padding: 20px;
+    background: #ffffff66;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 2px solid #00000055;
+}
+.layout-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 12px;
+}
+
+/* 가로 화면 / 태블릿 이상에서는 2열 */
+@media (min-width: 600px) {
+    .layout-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.panel {
+    background: #ffe6e6;
+    padding: 16px;
+    border-radius: 8px;
+    color: white;
+}
+
+.counter-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+
+.controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.value {
+    min-width: 32px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.result-box {
+    margin-top: 12px;
+    padding: 10px;
+    background: #333;
+    border-radius: 6px;
+}
+
+
+/* 기본 1열 (모바일 세로) */
+.responsive-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 10px;
+}
+
+/* 패널 스타일 */
+.panel {
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.counter-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.counter-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-box {
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 8px;
+    font-size: 22px;
+    background: #ed7aff;
+}
+
+    .btn-box:active {
+        background: #dcdcdc;
+    }
+
+.result {
+    text-align: center;
+}
+
+.result-text {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* --------------------------------------------------------
+   반응형 미디어쿼리
+--------------------------------------------------------- */
+
+/* 스마트폰 가로 / 작은 태블릿: 패널 2열 */
+@media (min-width: 600px) {
+    .responsive-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* 큰 태블릿 / PC: 3열도 가능 */
+@media (min-width: 900px) {
+    .responsive-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
