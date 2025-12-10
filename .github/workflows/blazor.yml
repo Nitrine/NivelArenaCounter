@@ -1,36 +1,39 @@
-name: Deploy Blazor WebAssembly
+name: Deploy Blazor WASM to GitHub Pages
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-          fetch-depth: 0
+      - uses: actions/checkout@v4
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: '5.0.x'
 
       - name: Publish
-        run: dotnet publish NivelCounter/NivelCounter.csproj -c Release -o build
+        run: dotnet publish NivelCounter/NivelCounter.csproj -c Release -o release
 
-      - name: Fix base href
-        run: |
-          sed -i 's|<base href="/" />|<base href="/NivelArenaCounter/" />|' build/wwwroot/index.html
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build/wwwroot
+          path: release/wwwroot
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
